@@ -14,14 +14,8 @@ ENGLISH
 
 WHAT DOES PAPERX DO?
 
-• Converts .docx to LaTeX
-• Automatically processes headings
-• Converts Word equations via Pandoc
-• Handles figures and tables
-• Generates table of contents
-• Supports automatic section numbering
-• Allows automatic cover page generation
-• Supports automatic graph generation from Excel
+<img width="412" height="214" alt="image" src="https://github.com/user-attachments/assets/9c71fc8f-fd76-4d0f-88bc-c2906ba73228" />
+
 
 
 1) REQUIRED PROGRAMS (INSTALL FIRST)
@@ -66,6 +60,7 @@ pip install numpy pandas matplotlib openpyxl
 ------------------------------------------------------------
 
 STEP 1 – Generate Cover Page (Optional but Recommended)
+===========================================
 
 Run:
 
@@ -79,21 +74,19 @@ cover.tex
 
 
 STEP 2 – Generate Graphs (Optional)
+========================================
 
 If you want to create plots from Excel:
 
 python PaperX_plots.py
 
 It will:
-• Ask Excel file name
-• Ask number of plots
-• Ask polynomial degree
-• Ask column letters
-• Generate PNG files inside assets/plots/
-• Create plots_meta.json
+<img width="353" height="160" alt="image" src="https://github.com/user-attachments/assets/2a179783-e817-411d-91b7-c7ce163531c6" />
+
 
 
 STEP 3 – Convert Word to LaTeX
+=======================================
 
 Place your .docx file inside the project folder.
 
@@ -111,6 +104,7 @@ toc.tex
 
 
 STEP 4 – Generate PDF
+======================================
 
 Compile LaTeX:
 
@@ -126,14 +120,8 @@ TÜRKÇE
 
 PAPERX NE YAPAR?
 
-• .docx dosyasını LaTeX’e çevirir
-• Başlıkları otomatik işler
-• Word denklemlerini Pandoc ile dönüştürür
-• Görselleri ve tabloları işler
-• İçindekiler üretir
-• Bölüm numaralandırması yapar
-• Otomatik kapak sayfası oluşturur
-• Excel’den grafik üretir
+<img width="358" height="198" alt="image" src="https://github.com/user-attachments/assets/77fb1ada-dbd8-48a7-8114-2796bd967295" />
+
 
 
 1) GEREKLİ PROGRAMLAR (ÖNCE KURUN)
@@ -178,6 +166,7 @@ pip install numpy pandas matplotlib openpyxl
 ------------------------------------------------------------
 
 ADIM 1 – Kapak Oluşturma (Opsiyonel)
+============================================
 
 python PaperX_cover.py
 
@@ -187,6 +176,7 @@ cover.tex oluşturulur.
 
 
 ADIM 2 – Grafik Oluşturma (Opsiyonel)
+============================================
 
 python PaperX_plots.py
 
@@ -195,6 +185,7 @@ Excel’den grafik üretir ve assets/plots/ içine PNG dosyaları koyar.
 
 
 ADIM 3 – Word → LaTeX
+============================================
 
 python PaperX_report.py
 
@@ -203,6 +194,7 @@ content.tex ve toc.tex oluşturulur.
 
 
 ADIM 4 – PDF Üretme
+============================================
 
 pdflatex main.tex
 pdflatex main.tex
