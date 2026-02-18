@@ -10,7 +10,7 @@ This guide explains how to use PaperX from scratch.
 
 
 ENGLISH
-===========================================
+----------------------------------------------------------
 
 WHAT DOES PAPERX DO?
 
@@ -62,7 +62,6 @@ pip install numpy pandas matplotlib openpyxl
 
 <img width="491" height="417" alt="image" src="https://github.com/user-attachments/assets/491365c3-fd1e-479a-b0d8-32ccbe87ef22" />
 
-
 4) HOW TO USE PAPERX (STEP BY STEP)
 ------------------------------------------------------------
 
@@ -72,12 +71,8 @@ Run:
 
 python PaperX_cover.py
 
-It will ask:
-• Language
-• Course code
-• Experiment title
-• Submission date
-• Group member information
+<img width="237" height="161" alt="image" src="https://github.com/user-attachments/assets/6c08066a-0af0-4ea6-b1b5-103b1ff78e97" />
+
 
 It generates:
 cover.tex
