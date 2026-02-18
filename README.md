@@ -8,9 +8,9 @@ professional PDF outputs using LaTeX.
 
 This guide explains how to use PaperX from scratch.
 
-============================================================
+===========================================
 ENGLISH
-============================================================
+===========================================
 
 WHAT DOES PAPERX DO?
 
