@@ -1,0 +1,71 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[turkish]{babel}
+
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{newtxtext,newtxmath} % Times New Roman
+
+% TABLO İÇİN
+\usepackage{array}
+\usepackage{tabularx}
+
+\usepackage[hidelinks]{hyperref}
+
+\pagestyle{plain}
+
+% Her zaman siyah
+\AtBeginDocument{\color{black}}
+
+% Başlık formatları
+\titleformat{\section}{\normalfont\fontsize{12}{14}\bfseries}{}{0pt}{}
+\titleformat{\subsection}{\normalfont\fontsize{12}{14}\bfseries}{}{0pt}{}
+
+% Başlık öncesi/sonrası boşlukları kapat (başlıktan sonra düz yazıda boşluk olmasın)
+\titlespacing*{\section}{0pt}{0pt}{0pt}
+\titlespacing*{\subsection}{0pt}{0pt}{0pt}
+
+% Şekil ve tablo başlığı ortalı, label gizli (caption* kullanacağız)
+\captionsetup[figure]{justification=centering, labelformat=empty}
+\captionsetup[table]{justification=centering, labelformat=empty}
+
+% Tablo içi satır aralığı (hücre yüksekliği)
+\renewcommand{\arraystretch}{1.5}
+
+
+\usepackage{amsmath}
+\numberwithin{equation}{section}
+
+
+\begin{document}
+\shorthandoff{=!:}
+
+% -------- Kapak: 1.0 spacing --------
+\include{cover}
+
+\newpage
+
+% -------- Kapak hariç: 1.5 spacing --------
+\onehalfspacing
+
+% Paragraf aralığını Python yönetiyor (LaTeX parskip kapalı)
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0pt}
+
+\input{toc}
+\newpage
+
+\include{content}
+
+\end{document}
