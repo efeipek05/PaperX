@@ -60,8 +60,7 @@ pip install numpy pandas matplotlib openpyxl
 ------------------------------------------------------------
 
 STEP 1 – Generate Cover Page (Optional but Recommended)
-===========================================
-
+-
 Run:
 
 python PaperX_cover.py
@@ -74,8 +73,7 @@ cover.tex
 
 
 STEP 2 – Generate Graphs (Optional)
-========================================
-
+-
 If you want to create plots from Excel:
 
 python PaperX_plots.py
@@ -86,7 +84,7 @@ It will:
 
 
 STEP 3 – Convert Word to LaTeX
-=======================================
+-
 
 Place your .docx file inside the project folder.
 
@@ -104,7 +102,7 @@ toc.tex
 
 
 STEP 4 – Generate PDF
-======================================
+-
 
 Compile LaTeX:
 
@@ -166,7 +164,7 @@ pip install numpy pandas matplotlib openpyxl
 ------------------------------------------------------------
 
 ADIM 1 – Kapak Oluşturma (Opsiyonel)
-============================================
+-
 
 python PaperX_cover.py
 
@@ -176,7 +174,7 @@ cover.tex oluşturulur.
 
 
 ADIM 2 – Grafik Oluşturma (Opsiyonel)
-============================================
+-
 
 python PaperX_plots.py
 
@@ -185,7 +183,7 @@ Excel’den grafik üretir ve assets/plots/ içine PNG dosyaları koyar.
 
 
 ADIM 3 – Word → LaTeX
-============================================
+-
 
 python PaperX_report.py
 
@@ -194,7 +192,7 @@ content.tex ve toc.tex oluşturulur.
 
 
 ADIM 4 – PDF Üretme
-============================================
+-
 
 pdflatex main.tex
 pdflatex main.tex
