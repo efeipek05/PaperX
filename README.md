@@ -8,7 +8,7 @@ professional PDF outputs using LaTeX.
 
 This guide explains how to use PaperX from scratch.
 
-===========================================
+
 ENGLISH
 ===========================================
 
@@ -23,7 +23,7 @@ WHAT DOES PAPERX DO?
 • Allows automatic cover page generation
 • Supports automatic graph generation from Excel
 
-------------------------------------------------------------
+
 1) REQUIRED PROGRAMS (INSTALL FIRST)
 ------------------------------------------------------------
 
@@ -47,7 +47,7 @@ WHAT DOES PAPERX DO?
    Test:
    pandoc --version
 
-------------------------------------------------------------
+
 2) INSTALL REQUIRED PYTHON PACKAGES
 ------------------------------------------------------------
 
@@ -56,7 +56,7 @@ Run inside the project folder:
 pip install python-docx
 pip install numpy pandas matplotlib openpyxl
 
-------------------------------------------------------------
+
 3) PROJECT FILE STRUCTURE
 ------------------------------------------------------------
 
@@ -77,7 +77,7 @@ PaperX/
     ├── logo_en.png
     └── plots/
 
-------------------------------------------------------------
+
 4) HOW TO USE PAPERX (STEP BY STEP)
 ------------------------------------------------------------
 
@@ -97,7 +97,6 @@ It will ask:
 It generates:
 cover.tex
 
-------------------------------------------------------------
 
 STEP 2 – Generate Graphs (Optional)
 
@@ -113,7 +112,6 @@ It will:
 • Generate PNG files inside assets/plots/
 • Create plots_meta.json
 
-------------------------------------------------------------
 
 STEP 3 – Convert Word to LaTeX
 
@@ -131,7 +129,6 @@ It generates:
 content.tex
 toc.tex
 
-------------------------------------------------------------
 
 STEP 4 – Generate PDF
 
@@ -142,9 +139,9 @@ pdflatex main.tex
 
 (Compile twice for correct TOC and references.)
 
-============================================================
+
 TÜRKÇE
-============================================================
+===================================
 
 PAPERX NE YAPAR?
 
@@ -157,7 +154,7 @@ PAPERX NE YAPAR?
 • Otomatik kapak sayfası oluşturur
 • Excel’den grafik üretir
 
-------------------------------------------------------------
+
 1) GEREKLİ PROGRAMLAR (ÖNCE KURUN)
 ------------------------------------------------------------
 
@@ -181,7 +178,7 @@ PAPERX NE YAPAR?
    Kontrol:
    pandoc --version
 
-------------------------------------------------------------
+
 2) GEREKLİ PYTHON PAKETLERİ
 ------------------------------------------------------------
 
@@ -190,7 +187,7 @@ Proje klasöründe:
 pip install python-docx
 pip install numpy pandas matplotlib openpyxl
 
-------------------------------------------------------------
+
 3) PROJE DOSYA YAPISI
 ------------------------------------------------------------
 
@@ -211,7 +208,7 @@ PaperX/
     ├── logo_en.png
     └── plots/
 
-------------------------------------------------------------
+
 4) PAPERX NASIL KULLANILIR?
 ------------------------------------------------------------
 
@@ -222,7 +219,7 @@ python PaperX_cover.py
 Dil, ders kodu, deney adı ve grup bilgileri sorulur.
 cover.tex oluşturulur.
 
-------------------------------------------------------------
+
 
 ADIM 2 – Grafik Oluşturma (Opsiyonel)
 
@@ -230,7 +227,7 @@ python PaperX_plots.py
 
 Excel’den grafik üretir ve assets/plots/ içine PNG dosyaları koyar.
 
-------------------------------------------------------------
+
 
 ADIM 3 – Word → LaTeX
 
@@ -238,7 +235,7 @@ python PaperX_report.py
 
 content.tex ve toc.tex oluşturulur.
 
-------------------------------------------------------------
+
 
 ADIM 4 – PDF Üretme
 
@@ -247,6 +244,6 @@ pdflatex main.tex
 
 (İçindekiler için iki kez derleyin.)
 
-------------------------------------------------------------
+
 
 PaperX – Structured Academic Report Automation
