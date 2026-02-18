@@ -60,22 +60,7 @@ pip install numpy pandas matplotlib openpyxl
 3) PROJECT FILE STRUCTURE
 ------------------------------------------------------------
 
-PaperX/
-│
-├── PaperX_report.py      ← MAIN REPORT ENGINE
-├── PaperX_cover.py       ← COVER PAGE GENERATOR
-├── PaperX_plots.py       ← GRAPH GENERATOR (Excel → PNG)
-├── main.tex
-├── content.tex
-├── toc.tex
-├── your_file.docx
-│
-└── assets/
-    ├── image1.png
-    ├── image2.png
-    ├── logo_tr.png
-    ├── logo_en.png
-    └── plots/
+<img width="491" height="417" alt="image" src="https://github.com/user-attachments/assets/491365c3-fd1e-479a-b0d8-32ccbe87ef22" />
 
 
 4) HOW TO USE PAPERX (STEP BY STEP)
