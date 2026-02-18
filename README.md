@@ -191,23 +191,7 @@ pip install numpy pandas matplotlib openpyxl
 
 3) PROJE DOSYA YAPISI
 ------------------------------------------------------------
-
-PaperX/
-│
-├── PaperX_report.py
-├── PaperX_cover.py
-├── PaperX_plots.py
-├── main.tex
-├── content.tex
-├── toc.tex
-├── dosyaniz.docx
-│
-└── assets/
-    ├── image1.png
-    ├── image2.png
-    ├── logo_tr.png
-    ├── logo_en.png
-    └── plots/
+<img width="179" height="407" alt="image" src="https://github.com/user-attachments/assets/28dd3b85-cc8d-4f33-8868-63804e2cdaec" />
 
 
 4) PAPERX NASIL KULLANILIR?
