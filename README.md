@@ -66,7 +66,6 @@ Accepted image formats are PNG, JPG, and JPEG.
 STEP 1 – Generate Cover Page (Optional but Recommended)
 -
 Run:
-
 python PaperX_cover.py
 
 <img width="237" height="161" alt="image" src="https://github.com/user-attachments/assets/6c08066a-0af0-4ea6-b1b5-103b1ff78e97" />
@@ -80,21 +79,22 @@ cover.tex
 STEP 2 – Generate Graphs (Optional)
 -
 If you want to create plots from Excel:
+Place your .xlsx file inside the project folder.
 
+Run:
 python PaperX_plots.py
 
 It will:
+
 <img width="353" height="160" alt="image" src="https://github.com/user-attachments/assets/2a179783-e817-411d-91b7-c7ce163531c6" />
 
 
 
 STEP 3 – Convert Word to LaTeX
 -
-
 Place your .docx file inside the project folder.
 
 Run:
-
 python PaperX_report.py
 
 The script will ask:
