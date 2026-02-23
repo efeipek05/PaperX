@@ -56,6 +56,10 @@ pip install numpy pandas matplotlib openpyxl
 
 <img width="491" height="417" alt="image" src="https://github.com/user-attachments/assets/491365c3-fd1e-479a-b0d8-32ccbe87ef22" />
 
+
+Accepted image formats are PNG, JPG, and JPEG.
+
+
 4) HOW TO USE PAPERX (STEP BY STEP)
 ------------------------------------------------------------
 
@@ -67,6 +71,7 @@ python PaperX_cover.py
 
 <img width="237" height="161" alt="image" src="https://github.com/user-attachments/assets/6c08066a-0af0-4ea6-b1b5-103b1ff78e97" />
 
+To use PaperX_cover.py, the document logo file must be named logo_en.
 
 It generates:
 cover.tex
