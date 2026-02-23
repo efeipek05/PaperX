@@ -88,13 +88,11 @@ It will:
 
 <img width="353" height="160" alt="image" src="https://github.com/user-attachments/assets/2a179783-e817-411d-91b7-c7ce163531c6" />
 
-
-<img width="445" height="142" alt="image" src="https://github.com/user-attachments/assets/14257f06-8151-4e9e-9b5a-adb7554df071" />
-
-
 You can write the axis names at the top of the column.
 The column must start between rows 0 and 50.
 
+
+<img width="445" height="142" alt="image" src="https://github.com/user-attachments/assets/14257f06-8151-4e9e-9b5a-adb7554df071" />
 
 
 STEP 3 – Convert Word to LaTeX
