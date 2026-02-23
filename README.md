@@ -117,7 +117,6 @@ STEP 4 – Generate PDF
 Compile LaTeX:
 
 pdflatex main.tex
-pdflatex main.tex
 
 (Compile twice for correct TOC and references.)
 
@@ -238,7 +237,6 @@ ADIM 4 – PDF Üretme
 
 LaTeX dosyasını derleyin:
 
-pdflatex main.tex
 pdflatex main.tex
 
 (İçindekiler ve referansların doğru oluşması için iki kez derleyin.)
