@@ -128,10 +128,6 @@ PAPERX NE YAPAR?
 
 <img width="358" height="198" alt="image" src="https://github.com/user-attachments/assets/77fb1ada-dbd8-48a7-8114-2796bd967295" />
 
-PaperX, yapılandırılmış Word (.docx) raporlarını LaTeX (.tex) formatına dönüştüren bir rapor otomasyon sistemidir.
-
-Word ortamında hazırlanmış düzenli raporları LaTeX’e çevirir ve LaTeX kullanarak profesyonel PDF çıktıları üretmenizi sağlar.
-
 Bu kılavuz, PaperX’i sıfırdan nasıl kullanacağınızı açıklar.
 
 ----------------------------------------------------------
