@@ -1,3 +1,4 @@
+from email.mime import text
 import os
 import re
 import unicodedata
@@ -179,9 +180,8 @@ def _t(lang: str, tr: str, en: str) -> str:
     return tr if lang == "tr" else en
 
 def ask_language() -> str:
-    # First question is always in English.
     while True:
-        lang = input("Hangi dili terccih ediyorsunuz? / What language do you prefer? (tr/en): ").strip().lower()
+        lang = input("Select language / Dil seç (tr/en): ").strip().lower()
         if lang in ("tr", "en"):
             return lang
         print("Please type 'tr' or 'en'.")
@@ -259,6 +259,16 @@ def strip_invisible(s: str) -> str:
     s = s.replace("\u00a0", " ")
     s = "".join(ch for ch in s if unicodedata.category(ch) != "Cf")
     return s
+
+def split_manual_linebreak_paragraph(raw_text: str) -> list[str]:
+    """
+    Word'de Shift+Enter ile aynı paragraf içinde oluşturulan satır sonlarını (\n)
+    ayrı paragraflara böl.
+    """
+    if not raw_text:
+        return []
+    parts = [strip_invisible(p).strip() for p in raw_text.splitlines()]
+    return [p for p in parts if p]
 
 # ================== LaTeX Helpers ==================
 def escape_latex(s: str) -> str:
@@ -1294,6 +1304,25 @@ def convert_docx_to_latex(docx_filename: str, lang: str, features: Features):
                         continue
 # NORMAL TEXT
             flush_pending_media_without_caption()
+
+            # --- NEW: Word içi Shift+Enter satırlarını böl ---
+            if raw_text and ("\n" in raw_text) and (not in_bib_section):
+                parts = split_manual_linebreak_paragraph(raw_text)
+
+                for part in parts:
+                    if not part or part == "---":
+                        continue
+
+                    escaped_part = replace_greek_unicode_after_escape(
+                        escape_latex(part)
+                    )
+
+                    latex_output.append(escaped_part)
+                    latex_output.append(r"\par")
+                    latex_output.append(r"\vspace{\baselineskip}")
+                    last_kind = "text"
+                continue
+
 
             if text and text != "---":
                 if features.use_bibliography and in_bib_section:
