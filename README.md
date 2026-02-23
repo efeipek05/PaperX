@@ -202,10 +202,10 @@ Excel dosyanızı (.xlsx) proje klasörüne yerleştirin.
 
 python PaperX_plots.py
 
-Script şunları yapar:
+Script şunları sorar:
 
-- Excel dosyasından grafik üretir.
-- PNG formatında çıktıları assets/plots/ klasörüne kaydeder.
+<img width="553" height="159" alt="image" src="https://github.com/user-attachments/assets/7b07eaff-ff23-4521-83ab-ffe3d664bde1" />
+
 
 Grafik oluştururken:
 
