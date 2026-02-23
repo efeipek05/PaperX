@@ -58,7 +58,7 @@ def get_labels(lang: str) -> dict:
         "UNIVERSITY_NAME": "TOBB ETÜ",
         "DEPARTMENT_NAME": "Makine Mühendisliği",
         "REPORT_TYPE": "Deney Raporu",
-        "PREPARED_BY": "Hazırlayan(lar)",
+        "PREPARED_BY": "Hazırlayan",
         "NAME_SURNAME": "Ad Soyad",
         "STUDENT_ID": "Öğr. No",
         "SUBMISSION_DATE_LABEL": "Teslim Tarihi",
@@ -139,6 +139,11 @@ def main():
                     "Please enter a number that is 1 or greater.",
                 )
             )
+            
+    if n == 1:
+        labels["PREPARED_BY"] = t(lang, "Hazırlayan", "Prepared by")
+    else:
+        labels["PREPARED_BY"] = t(lang, "Hazırlayanlar", "Prepared by")
 
     # ---------- Members ----------
     rows = []
