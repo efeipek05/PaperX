@@ -13,7 +13,8 @@ from shutil import which
 import subprocess
 from pathlib import Path
 
-
+from docx.oxml.ns import qn
+import uuid
 
 # ======================================================================
 # Word OMML (Equation Editor) support: OMML -> LaTeX (pandoc) -> image fallback
@@ -597,43 +598,40 @@ def parse_near_caption_line(text: str, lang: str):
 
     return None, None
 
-def collect_caption_around(blocks, i: int, lang: str, want_kind: str, skip_elems: set):
+def collect_caption_below(blocks, i: int, lang: str, want_kind: str, skip_elems: set):
     """
-    blocks: list[(kind, obj)]
-    i: current block index (image paragraph or table block)
-    want_kind: "figure" or "table"
-    skip_elems: caption paragraf elementlerini burada işaretleriz (output'a yazılmasın)
-
-    Kural:
-      - Önce bir üst paragrafı kontrol et.
-      - Bulamazsa bir alt paragrafı kontrol et.
-      - Bulduysa ve caption_text boşsa, bir sonraki paragrafı başlık devamı olarak al (tek paragraf).
+    SADECE aşağı bakar.
+    Boş satırları atlar.
+    İlk anlamlı satır:
+      --- ... ---  veya
+      Şekil 1: ... / Tablo 2: ...
     """
-    def get_p_text(j):
-        if 0 <= j < len(blocks) and blocks[j][0] == "p":
-            return strip_invisible(blocks[j][1].text or "").strip()
-        return ""
+    max_look = 8  # boşluk toleransı
 
-    # prefer previous paragraph caption, then next
-    candidates = [i-1, i+1]
-    for j in candidates:
-        t = get_p_text(j)
+    for j in range(i + 1, min(len(blocks), i + 1 + max_look)):
+        k, obj = blocks[j]
+
+        if k != "p":
+            continue
+
+        t = strip_invisible(obj.text or "").strip()
         if not t:
             continue
-        k, cap = parse_near_caption_line(t, lang=lang)
-        if k == want_kind:
-            # if caption has no title part, look at continuation (next paragraph)
-            cap_text = cap
-            if not cap_text:
-                cont = get_p_text(j+1)
-                # continuation satırı başka bir caption line değilse al
-                ck, _ = parse_near_caption_line(cont, lang=lang)
-                if cont and (ck is None):
-                    cap_text = cont
-                    skip_elems.add(blocks[j+1][1]._element)
-            # mark caption line itself to skip
-            skip_elems.add(blocks[j][1]._element)
-            return cap_text.strip()
+
+        # --- marker caption
+        cap_marker = parse_caption_marker(t)
+        if cap_marker:
+            skip_elems.add(obj._element)
+            return cap_marker.strip()
+
+        # Şekil 1: / Tablo 1:
+        kind2, cap = parse_near_caption_line(t, lang=lang)
+        if kind2 == want_kind:
+            skip_elems.add(obj._element)
+            return (cap or "").strip()
+
+        # anlamlı ama caption değil → bırak
+        break
 
     return None
 
@@ -650,6 +648,50 @@ def resolve_image_path(img_idx: int) -> tuple[str | None, str | None]:
             return rel.replace("\\", "/"), os.path.abspath(rel)
     return None, None
 
+
+
+def extract_inline_image_temp(paragraph) -> str | None:
+    """
+    Word inline görseli geçici dosyaya yazar.
+    extracted klasörü KULLANILMAZ.
+    """
+
+    try:
+        blips = paragraph._element.xpath('.//a:blip')
+        if not blips:
+            return None
+
+        rid = blips[0].get(qn('r:embed'))
+        if not rid:
+            return None
+
+        image_part = paragraph.part.related_parts[rid]
+        image_bytes = image_part.blob
+
+        content_type = (getattr(image_part, "content_type", "") or "").lower()
+
+        if "png" in content_type:
+            ext = "png"
+        elif "jpeg" in content_type or "jpg" in content_type:
+            ext = "jpg"
+        else:
+            ext = "png"
+
+        temp_dir = os.path.join("assets", "temp")
+        os.makedirs(temp_dir, exist_ok=True)
+
+        unique_name = f"{uuid.uuid4().hex}.{ext}"
+        out_path = os.path.join(temp_dir, unique_name)
+
+        with open(out_path, "wb") as f:
+            f.write(image_bytes)
+
+        return out_path.replace("\\", "/")
+
+    except Exception:
+        return None
+
+
 # ======================================================================
 # Plot marker + plot file resolution (ONLY INSERTION)
 # ======================================================================
@@ -663,7 +705,7 @@ def parse_plot_marker_line(text: str) -> bool:
 def resolve_plot_path(plot_idx: int) -> tuple[str | None, str | None]:
     """
     assets/plots/plot1.png, plot2.png ... dosyalarını bulur.
-    (grafik_uret.py buraya yazıyor.)
+    (plots.py buraya yazıyor.)
     """
     exts = ["png", "jpg", "jpeg"]
     candidates = []
@@ -974,7 +1016,7 @@ def convert_docx_to_latex(docx_filename: str, lang: str, features: Features):
                         last_kind = "equation"
 
                 elif (not in_bib_section) and features.use_figures and has_inline_image(obj):
-                    # Inline görsel paragrafı: caption'ı üst/alt satırdan yakala (Şekil/Figure ...)
+
                     flush_pending_media_without_caption()
 
                     img_counter_global += 1
@@ -982,41 +1024,51 @@ def convert_docx_to_latex(docx_filename: str, lang: str, features: Features):
                     if current_section_no == 0:
                         current_section_no = 1
 
+                    # 1️⃣ Önce assets/imageX dene (marker sistemi için)
                     latex_img_path, _ = resolve_image_path(img_counter_global)
+
+                    # 2️⃣ Yoksa Word içinden extract et
                     if latex_img_path is None:
-                        print(_t(lang, f"⚠️ UYARI: image{img_counter_global} bulunamadı (assets/ veya kök). Figür atlandı.",
-                                   f"⚠️ WARNING: image{img_counter_global} not found (assets/ or root). Figure skipped."))
+                        latex_img_path = extract_inline_image_temp(obj)
+                    
+                    if latex_img_path is None:
+                        print(_t(lang,
+                                f"⚠️ UYARI: Inline görsel extract edilemedi. Figür atlandı.",
+                                f"⚠️ WARNING: Could not extract inline image. Figure skipped."))
                         continue
 
-                    cap_text = None
-                    if pending_caption_for_inline_figure:
-                        cap_text = pending_caption_for_inline_figure
-                        pending_caption_for_inline_figure = None
-                    else:
-                        cap_text = collect_caption_around(blocks, bi, lang=lang, want_kind="figure", skip_elems=skip_elems)
+                    # 3️⃣ Caption SADECE alttan ara
+                    cap_text = collect_caption_below(
+                        blocks, bi, lang=lang,
+                        want_kind="figure",
+                        skip_elems=skip_elems
+                    )
+
                     if cap_text:
                         cap_line = format_figure_caption_with_section(
-                            cap_text, lang=lang, section_no=current_section_no, fig_no=fig_in_section
+                            cap_text, lang=lang,
+                            section_no=current_section_no,
+                            fig_no=fig_in_section
                         )
-                        if last_kind == "heading":
-                            latex_output.append(r"\vspace{\baselineskip}")
-                        latex_output.append("\n\\begin{figure}[H]")
-                        latex_output.append("  \\centering")
-                        latex_output.append(f"  \\includegraphics[width=0.5\\textwidth]{{{latex_img_path}}}")
-                        latex_output.append(f"  \\caption*{{{escape_latex(cap_line)}}}")
-                        latex_output.append("\\end{figure}\n")
-                        last_kind = "figure"
                     else:
-                        # caption yakalanamadıysa captionsız bas
-                        if last_kind == "heading":
-                            latex_output.append(r"\vspace{\baselineskip}")
-                        latex_output.append("\n\\begin{figure}[H]")
-                        latex_output.append("  \\centering")
-                        latex_output.append(f"  \\includegraphics[width=0.5\\textwidth]{{{latex_img_path}}}")
-                        latex_output.append("\\end{figure}\n")
-                        last_kind = "figure"
-                    continue
-                else:
+                        print(_t(lang,
+                                "⚠️ UYARI: Görsel bulundu ama caption yok. Captionsız basıldı.",
+                                "⚠️ WARNING: Image found but no caption below. Inserted without caption."))
+                        cap_line = None
+
+                    if last_kind == "heading":
+                        latex_output.append(r"\vspace{\baselineskip}")
+
+                    latex_output.append("\n\\begin{figure}[H]")
+                    latex_output.append("  \\centering")
+                    latex_output.append(f"  \\includegraphics[width=0.5\\textwidth]{{{latex_img_path}}}")
+
+                    if cap_line:
+                        latex_output.append(f"  \\caption*{{{escape_latex(cap_line)}}}")
+
+                    latex_output.append("\\end{figure}\n")
+
+                    last_kind = "figure"
                     continue
 
 
@@ -1390,7 +1442,7 @@ def convert_docx_to_latex(docx_filename: str, lang: str, features: Features):
 
             if pending_caption_for_table is None:
                 # --- NEW: Tablo gördüğün yerin üst/alt satırlarından "Tablo/Table ..." caption'ını yakala ---
-                near_cap = collect_caption_around(blocks, bi, lang=lang, want_kind="table", skip_elems=skip_elems)
+                near_cap = collect_caption_below(blocks, bi, lang=lang, want_kind="table", skip_elems=skip_elems)
                 if near_cap:
                     pending_caption_for_table = near_cap
                 else:
