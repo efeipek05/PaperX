@@ -1,115 +1,104 @@
+# PaperX
+
+PaperX, Word (.docx) belgelerini LaTeX (.tex) formatına dönüştüren bir rapor otomasyon sistemidir. Yapılandırılmış Word raporlarını LaTeX’e çevirir ve LaTeX kullanarak profesyonel PDF çıktıları üretmenizi sağlar. Bu rehber, PaperX’i sıfırdan nasıl kullanacağınızı açıklar.
+
 TÜRKÇE
-===================================
-
-PAPERX NE YAPAR?
-
-<img width="358" height="198" alt="image" src="https://github.com/user-attachments/assets/77fb1ada-dbd8-48a7-8114-2796bd967295" />
-
-Bu kılavuz, PaperX’i sıfırdan nasıl kullanacağınızı açıklar.
-
 ----------------------------------------------------------
 
-1) GEREKLİ PROGRAMLAR (ÖNCE KURUN)
-------------------------------------------------------------
+## PAPERX NE YAPAR?
 
-1. Python (Zorunlu)
-   Önerilen: Python 3.11 (64-bit)
-   İndirme: https://www.python.org/downloads/
-   Kurulum sırasında: "Add Python to PATH" seçeneğini işaretleyin.
+(README'deki görsel)
 
-   Test:
-   python --version
+----------------------------------------------------------
+## 1) GEREKLİ PROGRAMLAR (ÖNCE KURULUM)
 
-2. MiKTeX (PDF üretimi için zorunlu)
-   İndirme: https://miktex.org/download
+1. Python (Gerekli)  
+   Önerilen: Python 3.11 (64-bit)  
+   İndir: https://www.python.org/downloads/  
+   Kurulum sırasında: "Add Python to PATH" seçeneğini işaretleyin  
+   Test: `python --version`
 
-   Test:
-   pdflatex --version
+2. MiKTeX (PDF üretimi için gerekli)  
+   İndir: https://miktex.org/download  
+   Test: `pdflatex --version`
 
-3. Pandoc (Denklem dönüşümü için zorunlu)
-   İndirme: https://pandoc.org/installing.html
+3. Pandoc (Denklem dönüşümü için gerekli)  
+   İndir: https://pandoc.org/installing.html  
+   Test: `pandoc --version`
 
-   Test:
-   pandoc --version
+----------------------------------------------------------
+## 2) GEREKLİ PYTHON PAKETLERİNİ KUR
 
+### Seçenek A — Manuel Kurulum
+- Proje klasörünü VS Code ile açın.
+- Terminali açın.
+- Bağımlılıkları manuel kurun:
 
-2) GEREKLİ PYTHON PAKETLERİ
-------------------------------------------------------------
+`pip install -r requirements.txt`
 
-Proje klasörü içinde çalıştırın:
+veya
 
-pip install python-docx
-pip install numpy pandas matplotlib openpyxl
+`pip install python-docx`  
+`pip install numpy pandas matplotlib openpyxl`
 
+### Seçenek B — Otomatik Kurulum (Önerilen)
+- Proje klasörünü VS Code ile açın
+- VS Code içindeki terminali açın
+- Çalıştırın:
 
-3) PROJE DOSYA YAPISI
-------------------------------------------------------------
-<img width="179" height="407" alt="image" src="https://github.com/user-attachments/assets/28dd3b85-cc8d-4f33-8868-63804e2cdaec" />
+`python setup.py`
 
-Desteklenen görsel formatları: PNG, JPG ve JPEG.
+Sonra (VS Code – bunu bir kere yapın):
+- `Ctrl + Shift + P`
+- **Python: Select Interpreter**
+- `.venv` seçin
 
+----------------------------------------------------------
+## 3) PROJE DOSYA YAPISI
 
-4) PAPERX NASIL KULLANILIR? (ADIM ADIM)
-------------------------------------------------------------
+(README'deki görsel)
 
-ADIM 1 – Kapak Oluşturma (Opsiyonel fakat önerilir)
--
-Çalıştırın:
+Kabul edilen görsel formatları: PNG, JPG ve JPEG.
 
-python PaperX_cover.py
+----------------------------------------------------------
+## 4) PAPERX NASIL KULLANILIR (ADIM ADIM)
 
-PaperX_cover.py dosyasını kullanabilmek için, belge logosu dosyasının adı logo_en olmalıdır.
+### ADIM 1 – Kapak Sayfası Oluştur (Opsiyonel ama önerilir)
+- Çalıştırın: `python PaperX_cover.py`
 
-Desteklenen formatlar: PNG, JPG ve JPEG.
+(README'deki görsel)
 
-Oluşturulan dosya:
-cover.tex
+PaperX_cover.py kullanmak için, doküman logosu dosyasının adı `logo_en` olmalıdır.  
+Ürettiği çıktı: `cover.tex`
 
+### ADIM 2 – Grafik Oluştur (Opsiyonel)
+- Excel’den plot üretmek istiyorsanız:
+  `.xlsx` dosyanızı proje klasörünün içine koyun.
 
-ADIM 2 – Grafik Oluşturma (Opsiyonel)
--
-Excel dosyanızı (.xlsx) proje klasörüne yerleştirin.
+Çalıştırın: `python PaperX_plots.py`
 
-Çalıştırın:
+Bu script:
 
-python PaperX_plots.py
+(README'deki görseller)
 
-Script şunları sorar:
-
-<img width="553" height="159" alt="image" src="https://github.com/user-attachments/assets/7b07eaff-ff23-4521-83ab-ffe3d664bde1" />
-
-
-Grafik oluştururken:
-
+Notlar:
 - Eksen isimlerini sütunun en üstüne yazabilirsiniz.
-- Veri sütunu 0–50 satır aralığında başlamalıdır.
+- Sütun başlangıcı 0 ile 50. satır aralığında olmalıdır.
 
-<img width="422" height="123" alt="image" src="https://github.com/user-attachments/assets/a6282bc6-b92a-41b5-9af2-cc3eb7a0f2b6" />
-
-
-ADIM 3 – Word → LaTeX Dönüştürme
--
-.docx dosyanızı proje klasörüne yerleştirin.
-
-Çalıştırın:
-
-python PaperX_report.py
+### ADIM 3 – Word’ü LaTeX’e Dönüştür
+- `.docx` dosyanızı proje klasörünün içine koyun.
+- Çalıştırın: `python PaperX_report.py`
 
 Script sizden şunları ister:
-
 - Dil seçimi (tr/en)
-- Özellik seçimleri (şekiller, tablolar, denklemler vb.)
+- Özellik seçimleri (figürler, tablolar, denklemler vb.)
 
-Oluşturulan dosyalar:
-content.tex
-toc.tex
+Ürettiği dosyalar:
+- `content.tex`
+- `toc.tex`
 
+### ADIM 4 – PDF Oluştur
+- LaTeX derleyin: `pdflatex main.tex`
+  (İçindekiler ve referansların doğru çıkması için iki kez derleyin.)
 
-ADIM 4 – PDF Üretme
--
-
-LaTeX dosyasını derleyin:
-
-pdflatex main.tex
-
-(İçindekiler ve referansların doğru oluşması için iki kez derleyin.)
+PaperX – Yapılandırılmış Akademik Rapor Otomasyonu
